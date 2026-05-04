@@ -17,7 +17,16 @@ const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean);
-const vercelPreviewPattern = /^https:\/\/team-task-manager(?:-[a-z0-9-]+)?\.vercel\.app$/i;
+
+/** Vercel previews use many hostname shapes; allow any https://*.vercel.app */
+function isVercelAppOrigin(origin) {
+  try {
+    const url = new URL(origin);
+    return url.protocol === "https:" && url.hostname.endsWith(".vercel.app");
+  } catch {
+    return false;
+  }
+}
 
 function isAllowedOrigin(origin) {
   if (!origin) {
@@ -28,7 +37,7 @@ function isAllowedOrigin(origin) {
     return true;
   }
 
-  if (vercelPreviewPattern.test(origin)) {
+  if (isVercelAppOrigin(origin)) {
     return true;
   }
 
