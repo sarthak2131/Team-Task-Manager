@@ -44,6 +44,20 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
 
+// Support both `/api/*` and plain routes so deployed clients work even if
+// VITE_API_URL is configured without the `/api` suffix.
+app.get("/health", (req, res) => {
+  res.json({
+    status: "ok"
+  });
+});
+
+app.use("/auth", authRoutes);
+app.use("/dashboard", dashboardRoutes);
+app.use("/projects", projectRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/users", userRoutes);
+
 app.use(notFound);
 app.use(errorHandler);
 
