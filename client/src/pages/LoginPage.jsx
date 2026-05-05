@@ -51,7 +51,7 @@ export default function LoginPage() {
     <div className="grid min-h-screen bg-[#eed7f6] p-4 lg:grid-cols-[1.1fr_0.9fr] lg:p-8">
       <section className="hidden rounded-[2rem] bg-white/70 px-10 py-12 lg:flex lg:flex-col lg:justify-between">
         <div>
-          <p className="font-display text-[2.5rem] text-[#171717]">Sundays.</p>
+          <p className="font-display text-[2.5rem] text-[#171717]">Team Task Manager</p>
           <h1 className="mt-10 max-w-2xl text-[3.4rem] font-semibold leading-tight tracking-[-0.05em] text-[#1f2230]">
             Sign in to manage projects, tasks, and progress in one calm workspace.
           </h1>
@@ -106,9 +106,20 @@ export default function LoginPage() {
           </button>
 
           <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-[#f8f8fb] p-4 text-sm text-slate-600">
-            <p className="font-semibold text-slate-800">Demo credentials</p>
-            <p className="mt-3"><span className="font-semibold text-slate-800">Admin:</span> `admin.5c2b5fcf@example.com` / `Password123`</p>
-            <p className="mt-2"><span className="font-semibold text-slate-800">Member:</span> `member.5c2b5fcf@example.com` / `Password123`</p>
+            <p className="font-semibold text-slate-800">Demo Accounts</p>
+            <p className="mt-1 text-xs text-slate-500">Use these sample accounts to explore admin and member views.</p>
+            <p className="mt-3">
+              <span className="font-semibold text-slate-800">Admin Email:</span> admin.5c2b5fcf@example.com
+            </p>
+            <p className="mt-1">
+              <span className="font-semibold text-slate-800">Admin Password:</span> Password123
+            </p>
+            <p className="mt-3">
+              <span className="font-semibold text-slate-800">Member Email:</span> member.5c2b5fcf@example.com
+            </p>
+            <p className="mt-1">
+              <span className="font-semibold text-slate-800">Member Password:</span> Password123
+            </p>
           </div>
 
           <p className="mt-5 text-center text-sm text-slate-600">

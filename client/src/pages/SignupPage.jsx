@@ -48,7 +48,7 @@ export default function SignupPage() {
     <div className="grid min-h-screen bg-[#eed7f6] p-4 lg:grid-cols-[1.1fr_0.9fr] lg:p-8">
       <section className="hidden rounded-[2rem] bg-white/70 px-10 py-12 lg:flex lg:flex-col lg:justify-between">
         <div>
-          <p className="font-display text-[2.5rem] text-[#171717]">Sundays.</p>
+          <p className="font-display text-[2.5rem] text-[#171717]">Team Task Manager</p>
           <h1 className="mt-10 max-w-2xl text-[3.4rem] font-semibold leading-tight tracking-[-0.05em] text-[#1f2230]">
             Create your workspace and start tracking projects with clear ownership.
           </h1>
