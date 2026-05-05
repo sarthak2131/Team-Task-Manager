@@ -91,7 +91,7 @@ export default function TasksPage() {
           </div>
         </div>
 
-        <div className="mt-5 grid gap-4 xl:grid-cols-4">
+        <div className="mt-5 grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
           <label className="text-sm font-medium text-slate-600">
             Project
             <select className="input-field mt-2" value={filters.projectId} onChange={(event) => setFilters((c) => ({ ...c, projectId: event.target.value }))}>

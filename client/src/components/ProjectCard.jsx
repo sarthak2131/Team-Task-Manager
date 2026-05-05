@@ -27,14 +27,14 @@ export default function ProjectCard({ project, isAdmin, onEdit }) {
         {project.description || "No description yet. Add project context so everyone knows the goal."}
       </p>
 
-      <div className="mt-5 grid grid-cols-3 gap-3 text-sm">
+      <div className="mt-5 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
         <div className="rounded-2xl bg-[#f7f7fb] p-3">
           <span className="block text-xs uppercase tracking-[0.16em] text-slate-400">Team</span>
           <strong className="mt-2 block text-[#1f2230]">{project.members.length}</strong>
         </div>
         <div className="rounded-2xl bg-[#f7f7fb] p-3">
           <span className="block text-xs uppercase tracking-[0.16em] text-slate-400">Due</span>
-          <strong className="mt-2 block text-[#1f2230]">{formatDate(project.dueDate)}</strong>
+          <strong className="mt-2 block break-words text-[#1f2230]">{formatDate(project.dueDate)}</strong>
         </div>
         <div className="rounded-2xl bg-[#f7f7fb] p-3">
           <span className="block text-xs uppercase tracking-[0.16em] text-slate-400">Done</span>

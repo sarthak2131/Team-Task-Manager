@@ -271,15 +271,15 @@ export default function ProjectDetailPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex w-full flex-wrap gap-3 sm:w-auto">
             {user.role === "admin" ? (
               <>
-                <button type="button" className="button-secondary" onClick={() => setProjectModalOpen(true)}>
+                <button type="button" className="button-secondary w-full sm:w-auto" onClick={() => setProjectModalOpen(true)}>
                   Edit project
                 </button>
                 <button
                   type="button"
-                  className="button-primary"
+                  className="button-primary w-full sm:w-auto"
                   onClick={() => {
                     setEditingTask(null);
                     setTaskModalOpen(true);
@@ -287,7 +287,7 @@ export default function ProjectDetailPage() {
                 >
                   New task
                 </button>
-                <button type="button" className="button-danger" onClick={handleDeleteProject} disabled={deletingProject}>
+                <button type="button" className="button-danger w-full sm:w-auto" onClick={handleDeleteProject} disabled={deletingProject}>
                   {deletingProject ? "Deleting..." : "Delete project"}
                 </button>
               </>
@@ -325,18 +325,18 @@ export default function ProjectDetailPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-2">
+      <section className="grid gap-6 2xl:grid-cols-2">
         <article className="rounded-[1.8rem] bg-white p-5 shadow-sm sm:p-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Team</p>
             <h3 className="mt-2 text-[1.45rem] font-semibold tracking-[-0.03em] text-[#1f2230]">Assigned members</h3>
           </div>
 
-          <div className="mt-6 grid gap-3 md:grid-cols-2">
+          <div className="mt-6 grid gap-3 lg:grid-cols-2">
             {project.members.map((member) => (
-              <div key={member._id} className="rounded-[1.5rem] bg-[#f8f8fb] p-4">
+              <div key={member._id} className="min-w-0 rounded-[1.5rem] bg-[#f8f8fb] p-4">
                 <strong className="text-[#1f2230]">{member.name}</strong>
-                <p className="mt-1 text-sm text-slate-500">{member.email}</p>
+                <p className="mt-1 break-all text-sm text-slate-500">{member.email}</p>
                 <div className="mt-3">
                   <StatusPill value={member.role} />
                 </div>
@@ -381,11 +381,11 @@ export default function ProjectDetailPage() {
             </h3>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="grid w-full gap-3 md:grid-cols-2 xl:w-auto">
             <label className="text-sm font-medium text-slate-600">
               Status
               <select
-                className="input-field mt-2 w-44"
+                className="input-field mt-2 w-full xl:w-44"
                 value={filters.status}
                 onChange={(event) => setFilters((current) => ({ ...current, status: event.target.value }))}
               >
@@ -400,7 +400,7 @@ export default function ProjectDetailPage() {
             <label className="text-sm font-medium text-slate-600">
               Priority
               <select
-                className="input-field mt-2 w-44"
+                className="input-field mt-2 w-full xl:w-44"
                 value={filters.priority}
                 onChange={(event) => setFilters((current) => ({ ...current, priority: event.target.value }))}
               >

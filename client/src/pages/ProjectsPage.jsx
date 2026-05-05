@@ -103,7 +103,7 @@ export default function ProjectsPage() {
             </p>
           </div>
           {user.role === "admin" ? (
-            <button type="button" className="button-primary" onClick={() => setModalOpen(true)}>
+            <button type="button" className="button-primary w-full sm:w-auto" onClick={() => setModalOpen(true)}>
               New project
             </button>
           ) : null}

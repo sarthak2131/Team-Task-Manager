@@ -90,20 +90,40 @@ export default function DashboardPage() {
                 const progress = progressFromStatus(task.status);
 
                 return (
-                  <article key={task._id} className="grid gap-4 rounded-[1.6rem] border border-slate-200 bg-white px-5 py-5 shadow-sm lg:grid-cols-[minmax(0,2fr)_auto_auto_auto_minmax(120px,0.8fr)] lg:items-center">
+                  <article key={task._id} className="rounded-[1.6rem] border border-slate-200 bg-white px-5 py-5 shadow-sm">
                     <div className="min-w-0">
                       <strong className="block truncate text-[1.05rem] font-semibold text-[#1f2230]">{task.title}</strong>
-                      <p className="mt-1 text-sm text-slate-500">{task.project?.name || "Task item"}</p>
+                      <p className="mt-1 text-sm text-slate-500">{task.description || "Task item"}</p>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      <StatusPill value={task.status} />
-                      {task.isOverdue ? <StatusPill value="overdue" /> : null}
+
+                    <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                      <div className="rounded-2xl bg-[#f8f8fb] px-4 py-3 text-sm text-slate-500">
+                        <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Project</span>
+                        <p className="mt-2 break-words text-slate-700">{task.project?.name || "Task item"}</p>
+                      </div>
+
+                      <div className="rounded-2xl bg-[#f8f8fb] px-4 py-3 text-sm text-slate-500">
+                        <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Assignee</span>
+                        <p className="mt-2 break-words text-slate-700">{task.assignee?.name || "Unassigned"}</p>
+                      </div>
+
+                      <div className="rounded-2xl bg-[#f8f8fb] px-4 py-3 text-sm text-slate-500">
+                        <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Status</span>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <StatusPill value={task.status} />
+                          {task.isOverdue ? <StatusPill value="overdue" /> : null}
+                        </div>
+                      </div>
+
+                      <div className="rounded-2xl bg-[#f8f8fb] px-4 py-3 text-sm text-slate-500">
+                        <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Priority</span>
+                        <div className="mt-2">
+                          <StatusPill value={task.priority || "medium"} />
+                        </div>
+                      </div>
                     </div>
-                    <div className="justify-self-start">
-                      <StatusPill value={task.priority || "medium"} />
-                    </div>
-                    <span className="text-xs text-slate-500">{task.assignee?.name || "Unassigned"}</span>
-                    <div className="flex items-center gap-3">
+
+                    <div className="mt-5 flex items-center gap-3 xl:max-w-[460px]">
                       <div className="h-1.5 flex-1 rounded-full bg-slate-100">
                         <div className="h-full rounded-full bg-black" style={{ width: `${progress}%` }} />
                       </div>
@@ -129,13 +149,13 @@ export default function DashboardPage() {
           </div>
           <div className="mt-5 grid gap-3 xl:grid-cols-2">
             {team.map((member) => (
-              <div key={member._id} className="flex items-center justify-between gap-3 rounded-[1.25rem] bg-[#f8f8fb] px-4 py-3">
-                <div>
+              <div key={member._id} className="flex flex-col gap-3 rounded-[1.25rem] bg-[#f8f8fb] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
                   <strong className="text-sm text-[#1f2230]">{member.name}</strong>
-                  <p className="mt-1 text-xs text-slate-500">{member.email}</p>
+                  <p className="mt-1 break-all text-xs text-slate-500">{member.email}</p>
                 </div>
                 <select
-                  className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 sm:w-auto"
                   value={member.role}
                   onChange={(event) => handleRoleChange(member._id, event.target.value)}
                   disabled={savingRoleFor === member._id}
