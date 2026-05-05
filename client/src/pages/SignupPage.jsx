@@ -45,21 +45,21 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="grid min-h-screen bg-shell lg:grid-cols-[1.15fr_0.85fr]">
-      <section className="hidden bg-[linear-gradient(145deg,rgba(67,51,77,0.98),rgba(15,118,110,0.92))] px-10 py-12 text-white lg:flex lg:flex-col lg:justify-between">
+    <div className="grid min-h-screen bg-[#eed7f6] p-4 lg:grid-cols-[1.1fr_0.9fr] lg:p-8">
+      <section className="hidden rounded-[2rem] bg-white/70 px-10 py-12 lg:flex lg:flex-col lg:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-300">Admin and member roles</p>
-          <h1 className="mt-6 max-w-2xl font-display text-6xl leading-tight">
-            Launch a task workspace that keeps delivery visible and accountable.
+          <p className="font-display text-[2.5rem] text-[#171717]">Sundays.</p>
+          <h1 className="mt-10 max-w-2xl text-[3.4rem] font-semibold leading-tight tracking-[-0.05em] text-[#1f2230]">
+            Create your workspace and start tracking projects with clear ownership.
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-8 text-slate-200">
+          <p className="mt-6 max-w-xl text-base leading-8 text-slate-500">
             The first account becomes the initial admin. After that, admins can invite existing users to projects by
             email and manage delivery from one place.
           </p>
         </div>
 
-        <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-          <p className="text-sm leading-7 text-slate-100">
+        <div className="rounded-[1.6rem] border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-sm leading-7 text-slate-600">
             Create your account to access JWT auth, member-scoped task views, overdue tracking, and responsive project
             management tools.
           </p>
@@ -67,10 +67,10 @@ export default function SignupPage() {
       </section>
 
       <section className="flex items-center justify-center px-4 py-10 sm:px-6">
-        <form className="panel w-full max-w-lg p-8 sm:p-10" onSubmit={handleSubmit}>
-          <p className="eyebrow">Create account</p>
-          <h2 className="mt-3 font-display text-4xl text-ink">Sign up</h2>
-          <p className="mt-3 text-sm leading-7 text-slate-600">Start your team workspace in a few steps.</p>
+        <form className="w-full max-w-lg rounded-[2rem] border border-white/80 bg-white p-8 shadow-[0_24px_70px_rgba(99,72,123,0.18)] sm:p-10" onSubmit={handleSubmit}>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Create account</p>
+          <h2 className="mt-3 text-[2rem] font-semibold tracking-[-0.04em] text-[#1f2230]">Sign up</h2>
+          <p className="mt-3 text-sm leading-7 text-slate-500">Start your team workspace in a few steps.</p>
 
           <div className="mt-8 space-y-5">
             <label className="block text-sm font-medium text-slate-700">
@@ -116,7 +116,7 @@ export default function SignupPage() {
 
           <p className="mt-5 text-center text-sm text-slate-600">
             Already have an account?{" "}
-            <Link to="/login" className="font-semibold text-teal-700 hover:text-teal-800">
+            <Link to="/login" className="font-semibold text-slate-900 hover:text-black">
               Log in
             </Link>
           </p>

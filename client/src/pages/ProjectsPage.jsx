@@ -90,14 +90,13 @@ export default function ProjectsPage() {
 
   return (
     <div className="space-y-6">
-      <section className="panel bg-gradient-to-br from-white/90 via-white/75 to-amber-50/80 p-6 sm:p-8">
+      <section className="rounded-[1.8rem] bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="eyebrow">Projects</p>
-            <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">
-              {user.role === "admin" ? "Create, assign, and steer delivery." : "Track the projects you belong to."}
-            </h2>
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
+            <p className="text-[1.45rem] font-semibold tracking-[-0.04em] text-[#1f2230]">
+              {user.role === "admin" ? "Project workspace" : "Assigned projects"}
+            </p>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">
               {user.role === "admin"
                 ? "Build new projects, assign members by email, and open each workspace for deeper task management."
                 : "Open any project you’re part of to review your assigned work, update statuses, and watch deadlines."}
@@ -111,7 +110,7 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {error ? <div className="panel p-6 text-sm font-semibold text-rose-700">{error}</div> : null}
+      {error ? <div className="rounded-[1.7rem] border border-rose-200 bg-white p-6 text-sm font-semibold text-rose-700">{error}</div> : null}
 
       <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {projects.length ? (

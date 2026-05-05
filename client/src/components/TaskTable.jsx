@@ -11,6 +11,13 @@ function formatDate(dateValue) {
   return new Date(dateValue).toLocaleDateString();
 }
 
+function progressFromStatus(status) {
+  if (status === "completed") return 100;
+  if (status === "review") return 80;
+  if (status === "in_progress") return 55;
+  return 15;
+}
+
 export default function TaskTable({
   tasks,
   user,
@@ -33,93 +40,88 @@ export default function TaskTable({
 
   return (
     <div className="space-y-4">
-      <div className="hidden overflow-hidden rounded-[2rem] border border-amber-100 bg-white/85 shadow-panel lg:block">
-        <div
-          className={`grid gap-4 border-b border-amber-100 bg-amber-50/70 px-6 py-4 text-xs font-semibold uppercase tracking-[0.25em] text-slate-500 ${
-            showProjectColumn
-              ? "grid-cols-[2.2fr_1.1fr_1fr_1fr_1fr_1fr]"
-              : "grid-cols-[2.2fr_1.1fr_1fr_1fr_1fr]"
-          }`}
-        >
-          <span>Task</span>
-          {showProjectColumn ? <span>Project</span> : null}
-          <span>Status</span>
-          <span>Priority</span>
-          <span>Due</span>
-          <span>Actions</span>
-        </div>
-
+      <div className="hidden space-y-3 lg:block">
         {tasks.map((task) => {
           const canUpdateStatus = isAdmin || task.assignee?._id === user._id;
+          const progress = progressFromStatus(task.status);
 
           return (
-            <div
+            <article
               key={task._id}
-              className={`grid gap-4 border-b border-amber-100 px-6 py-5 last:border-b-0 ${
-                showProjectColumn
-                  ? "grid-cols-[2.2fr_1.1fr_1fr_1fr_1fr_1fr]"
-                  : "grid-cols-[2.2fr_1.1fr_1fr_1fr_1fr]"
-              }`}
+              className="grid items-center gap-4 rounded-[1.6rem] border border-slate-200 bg-white px-6 py-5 shadow-sm"
+             style={{
+  gridTemplateColumns: showProjectColumn
+    ? "minmax(0,2.2fr) minmax(0,1fr) minmax(0,0.9fr) minmax(0,auto) minmax(0,auto) minmax(0,auto) minmax(0,1fr) minmax(0,1fr)"
+    : "minmax(0,2.5fr) minmax(0,0.9fr) minmax(0,auto) minmax(0,auto) minmax(0,auto) minmax(0,1fr) minmax(0,1fr)"
+}}
             >
-              <div>
-                <strong className="text-base text-ink">{task.title}</strong>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{task.description || "No description provided."}</p>
-                <p className="mt-2 text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
-                  {task.assignee?.name || "Unassigned"}
+              <div className="min-w-0">
+                <strong className="block truncate text-[1.05rem] font-semibold text-[#1f2230]">{task.title}</strong>
+                <p className="mt-1 truncate text-sm text-slate-500">
+                  {showProjectColumn ? task.project?.name : task.description || "Task item"}
                 </p>
               </div>
 
               {showProjectColumn ? (
-                <div className="self-center text-sm text-slate-600">
-                  <Link className="font-semibold text-teal-700 hover:text-teal-800" to={`/projects/${task.project?._id}`}>
+                <div className="min-w-0 text-sm text-slate-500">
+                  <Link className="truncate font-medium text-slate-600 hover:text-black" to={`/projects/${task.project?._id}`}>
                     {task.project?.name}
                   </Link>
                 </div>
               ) : null}
 
-              <div className="self-center">
-                <div className="flex flex-wrap gap-2">
-                  {canUpdateStatus ? (
-                    <select
-                      className="rounded-full border border-amber-100 bg-white px-3 py-2 text-sm"
-                      value={task.status}
-                      onChange={(event) => onStatusChange(task, event.target.value)}
-                    >
-                      <option value="todo">To do</option>
-                      <option value="in_progress">In progress</option>
-                      <option value="review">In review</option>
-                      <option value="completed">Completed</option>
-                    </select>
-                  ) : (
-                    <StatusPill value={task.status} />
-                  )}
-                  {task.isOverdue ? <StatusPill value="overdue" /> : null}
-                </div>
+              <div className="flex min-w-0 items-center gap-2">
+                <span className="muted-chip">{task.assignee?.name || "Unassigned"}</span>
               </div>
 
-              <div className="self-center">
+              <div className="flex flex-wrap gap-2">
+                {canUpdateStatus ? (
+                  <select
+                    className="min-w-[132px] rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600"
+                    value={task.status}
+                    onChange={(event) => onStatusChange(task, event.target.value)}
+                  >
+                    <option value="todo">Todo</option>
+                    <option value="in_progress">In progress</option>
+                    <option value="review">In review</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                ) : (
+                  <StatusPill value={task.status} />
+                )}
+                {task.isOverdue ? <StatusPill value="overdue" /> : null}
+              </div>
+
+              <div className="justify-self-start">
                 <StatusPill value={task.priority} />
               </div>
 
-              <span className="self-center text-sm text-slate-600">{formatDate(task.dueDate)}</span>
+              <div className="text-xs whitespace-nowrap text-slate-500">{formatDate(task.dueDate)}</div>
 
-              <div className="self-center">
+              <div className="flex min-w-[150px] items-center gap-3 justify-self-end">
+                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100">
+                  <span className="block h-full rounded-full bg-black" style={{ width: `${progress}%` }} />
+                </div>
+                <span className="text-xs font-semibold text-slate-500">{progress}%</span>
+              </div>
+
+              <div className="flex items-center justify-end gap-2 whitespace-nowrap min-w-0">
                 {canManageTasks ? (
-                  <div className="flex flex-wrap gap-2">
-                    <button type="button" className="button-secondary px-4 py-2 text-xs" onClick={() => onEdit(task)}>
+                  <>
+                    <button type="button" className="button-secondary min-w-[72px] px-3 py-2 text-xs" onClick={() => onEdit(task)}>
                       Edit
                     </button>
-                    <button type="button" className="button-danger px-4 py-2 text-xs" onClick={() => onDelete(task)}>
+                    <button type="button" className="button-danger min-w-[78px] px-3 py-2 text-xs" onClick={() => onDelete(task)}>
                       Delete
                     </button>
-                  </div>
+                  </>
                 ) : (
-                  <Link className="text-sm font-semibold text-teal-700 hover:text-teal-800" to={`/projects/${task.project?._id}`}>
+                  <Link className="button-secondary min-w-[118px] px-3 py-2 text-xs" to={`/projects/${task.project?._id}`}>
                     Open project
                   </Link>
                 )}
               </div>
-            </div>
+            </article>
           );
         })}
       </div>
@@ -127,27 +129,32 @@ export default function TaskTable({
       <div className="space-y-4 lg:hidden">
         {tasks.map((task) => {
           const canUpdateStatus = isAdmin || task.assignee?._id === user._id;
-
+          const progress = progressFromStatus(task.status);
           return (
-            <article key={task._id} className="panel p-5">
+            <article key={task._id} className="rounded-[1.6rem] border border-slate-200 bg-white p-5 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h4 className="font-display text-2xl text-ink">{task.title}</h4>
-                  <p className="mt-2 text-sm text-slate-500">{task.assignee?.name || "Unassigned"}</p>
+                  <h4 className="text-xl font-semibold tracking-[-0.03em] text-[#1f2230]">{task.title}</h4>
+                  <p className="mt-1 text-sm text-slate-500">{task.assignee?.name || "Unassigned"}</p>
                 </div>
                 <StatusPill value={task.priority} />
               </div>
-
-              <p className="mt-4 text-sm leading-7 text-slate-600">{task.description || "No description provided."}</p>
 
               <div className="mt-4 flex flex-wrap gap-2">
                 <StatusPill value={task.status} />
                 {task.isOverdue ? <StatusPill value="overdue" /> : null}
               </div>
 
-              <div className="mt-4 text-sm text-slate-600">
+              <div className="mt-4 space-y-2 text-sm text-slate-500">
+                <p>{task.project?.name || "Task item"}</p>
                 <p>Due: {formatDate(task.dueDate)}</p>
-                {task.project?.name ? <p className="mt-1">Project: {task.project.name}</p> : null}
+              </div>
+
+              <div className="mt-5 flex items-center gap-3">
+                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100">
+                  <span className="block h-full rounded-full bg-black" style={{ width: `${progress}%` }} />
+                </div>
+                <span className="text-xs font-semibold text-slate-500">{progress}%</span>
               </div>
 
               <div className="mt-5 space-y-3">
@@ -157,7 +164,7 @@ export default function TaskTable({
                     value={task.status}
                     onChange={(event) => onStatusChange(task, event.target.value)}
                   >
-                    <option value="todo">To do</option>
+                    <option value="todo">Todo</option>
                     <option value="in_progress">In progress</option>
                     <option value="review">In review</option>
                     <option value="completed">Completed</option>
@@ -167,17 +174,20 @@ export default function TaskTable({
                 <div className="flex flex-wrap gap-2">
                   {canManageTasks ? (
                     <>
-                      <button type="button" className="button-secondary flex-1" onClick={() => onEdit(task)}>
+                      <button type="button" className="button-secondary min-w-[120px] flex-1" onClick={() => onEdit(task)}>
                         Edit
                       </button>
-                      <button type="button" className="button-danger flex-1" onClick={() => onDelete(task)}>
+                      <button type="button" className="button-danger min-w-[120px] flex-1" onClick={() => onDelete(task)}>
                         Delete
                       </button>
                     </>
                   ) : (
-                    <Link className="button-secondary w-full" to={`/projects/${task.project?._id}`}>
-                      Open project
-                    </Link>
+                   <Link
+  className="button-secondary w-full max-w-[140px] px-3 py-2 text-xs truncate"
+  to={`/projects/${task.project?._id}`}
+>
+  Open project
+</Link>
                   )}
                 </div>
               </div>

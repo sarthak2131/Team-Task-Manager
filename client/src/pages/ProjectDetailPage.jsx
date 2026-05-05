@@ -262,12 +262,11 @@ export default function ProjectDetailPage() {
 
   return (
     <div className="space-y-6">
-      <section className="panel bg-gradient-to-br from-white/90 via-white/75 to-amber-50/80 p-6 sm:p-8">
+      <section className="rounded-[1.8rem] bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="eyebrow">Project detail</p>
-            <h2 className="mt-3 font-display text-4xl text-ink sm:text-5xl">{project.name}</h2>
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">
+            <p className="text-[1.6rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{project.name}</p>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">
               {project.description || "No description added for this project yet."}
             </p>
           </div>
@@ -297,47 +296,47 @@ export default function ProjectDetailPage() {
         </div>
       </section>
 
-      {error ? <div className="panel p-6 text-sm font-semibold text-rose-700">{error}</div> : null}
+      {error ? <div className="rounded-[1.7rem] border border-rose-200 bg-white p-6 text-sm font-semibold text-rose-700">{error}</div> : null}
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="panel bg-gradient-to-br from-amber-50 to-white p-5">
+        <div className="rounded-[1.5rem] border border-slate-200 bg-[#fff8ea] p-5 shadow-sm">
           <p className="text-sm text-slate-500">Progress</p>
-          <strong className="mt-3 block font-display text-4xl text-ink">{summary.progress}%</strong>
+          <strong className="mt-3 block text-[2rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{summary.progress}%</strong>
           <span className="mt-3 block text-sm text-slate-600">
             {summary.completedTasks} of {summary.totalTasks} tasks completed
           </span>
         </div>
-        <div className="panel bg-gradient-to-br from-cyan-50 to-white p-5">
+        <div className="rounded-[1.5rem] border border-slate-200 bg-[#edf8f6] p-5 shadow-sm">
           <p className="text-sm text-slate-500">Open tasks</p>
-          <strong className="mt-3 block font-display text-4xl text-ink">
+          <strong className="mt-3 block text-[2rem] font-semibold tracking-[-0.04em] text-[#1f2230]">
             {summary.byStatus.todo + summary.byStatus.in_progress + summary.byStatus.review}
           </strong>
           <span className="mt-3 block text-sm text-slate-600">Still in flight</span>
         </div>
-        <div className="panel bg-gradient-to-br from-rose-50 to-white p-5">
+        <div className="rounded-[1.5rem] border border-slate-200 bg-[#fff0f4] p-5 shadow-sm">
           <p className="text-sm text-slate-500">Overdue</p>
-          <strong className="mt-3 block font-display text-4xl text-ink">{summary.overdueTasks}</strong>
+          <strong className="mt-3 block text-[2rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{summary.overdueTasks}</strong>
           <span className="mt-3 block text-sm text-slate-600">Past due and incomplete</span>
         </div>
-        <div className="panel bg-gradient-to-br from-emerald-50 to-white p-5">
+        <div className="rounded-[1.5rem] border border-slate-200 bg-[#f3ecff] p-5 shadow-sm">
           <p className="text-sm text-slate-500">Deadline</p>
-          <strong className="mt-3 block font-display text-4xl text-ink">{formatDate(project.dueDate)}</strong>
+          <strong className="mt-3 block text-[2rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{formatDate(project.dueDate)}</strong>
           <span className="mt-3 block text-sm text-slate-600">Owner: {project.owner?.name}</span>
         </div>
       </section>
 
       <section className="grid gap-6 xl:grid-cols-2">
-        <article className="panel p-6">
+        <article className="rounded-[1.8rem] bg-white p-5 shadow-sm sm:p-6">
           <div>
-            <p className="eyebrow">Team</p>
-            <h3 className="mt-2 font-display text-3xl text-ink">Assigned members</h3>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Team</p>
+            <h3 className="mt-2 text-[1.45rem] font-semibold tracking-[-0.03em] text-[#1f2230]">Assigned members</h3>
           </div>
 
           <div className="mt-6 grid gap-3 md:grid-cols-2">
             {project.members.map((member) => (
-              <div key={member._id} className="rounded-[1.5rem] bg-slate-50 p-4">
-                <strong className="text-ink">{member.name}</strong>
-                <p className="mt-1 text-sm text-slate-600">{member.email}</p>
+              <div key={member._id} className="rounded-[1.5rem] bg-[#f8f8fb] p-4">
+                <strong className="text-[#1f2230]">{member.name}</strong>
+                <p className="mt-1 text-sm text-slate-500">{member.email}</p>
                 <div className="mt-3">
                   <StatusPill value={member.role} />
                 </div>
@@ -346,44 +345,44 @@ export default function ProjectDetailPage() {
           </div>
         </article>
 
-        <article className="panel p-6">
+        <article className="rounded-[1.8rem] bg-white p-5 shadow-sm sm:p-6">
           <div>
-            <p className="eyebrow">Breakdown</p>
-            <h3 className="mt-2 font-display text-3xl text-ink">Tasks by status</h3>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Breakdown</p>
+            <h3 className="mt-2 text-[1.45rem] font-semibold tracking-[-0.03em] text-[#1f2230]">Tasks by status</h3>
           </div>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[1.5rem] bg-slate-50 p-4">
+            <div className="rounded-[1.5rem] bg-[#f8f8fb] p-4">
               <StatusPill value="todo" />
-              <p className="mt-4 font-display text-3xl text-ink">{summary.byStatus.todo}</p>
+              <p className="mt-4 text-[1.8rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{summary.byStatus.todo}</p>
             </div>
-            <div className="rounded-[1.5rem] bg-slate-50 p-4">
+            <div className="rounded-[1.5rem] bg-[#f8f8fb] p-4">
               <StatusPill value="in_progress" />
-              <p className="mt-4 font-display text-3xl text-ink">{summary.byStatus.in_progress}</p>
+              <p className="mt-4 text-[1.8rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{summary.byStatus.in_progress}</p>
             </div>
-            <div className="rounded-[1.5rem] bg-slate-50 p-4">
+            <div className="rounded-[1.5rem] bg-[#f8f8fb] p-4">
               <StatusPill value="review" />
-              <p className="mt-4 font-display text-3xl text-ink">{summary.byStatus.review}</p>
+              <p className="mt-4 text-[1.8rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{summary.byStatus.review}</p>
             </div>
-            <div className="rounded-[1.5rem] bg-slate-50 p-4">
+            <div className="rounded-[1.5rem] bg-[#f8f8fb] p-4">
               <StatusPill value="completed" />
-              <p className="mt-4 font-display text-3xl text-ink">{summary.byStatus.completed}</p>
+              <p className="mt-4 text-[1.8rem] font-semibold tracking-[-0.04em] text-[#1f2230]">{summary.byStatus.completed}</p>
             </div>
           </div>
         </article>
       </section>
 
-      <section className="panel p-6">
+      <section className="rounded-[1.8rem] bg-white p-5 shadow-sm sm:p-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">Tasks</p>
-            <h3 className="mt-2 font-display text-3xl text-ink">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">Tasks</p>
+            <h3 className="mt-2 text-[1.45rem] font-semibold tracking-[-0.03em] text-[#1f2230]">
               {user.role === "admin" ? "Work items in this project" : "Your assigned tasks in this project"}
             </h3>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <label className="text-sm font-medium text-slate-700">
+            <label className="text-sm font-medium text-slate-600">
               Status
               <select
                 className="input-field mt-2 w-44"
@@ -398,7 +397,7 @@ export default function ProjectDetailPage() {
               </select>
             </label>
 
-            <label className="text-sm font-medium text-slate-700">
+            <label className="text-sm font-medium text-slate-600">
               Priority
               <select
                 className="input-field mt-2 w-44"
