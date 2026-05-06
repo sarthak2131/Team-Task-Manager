@@ -6,6 +6,18 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 
 const featurePoints = ["Create projects", "Assign tasks", "Track delivery", "Manage overdue work"];
+const demoAccounts = [
+  {
+    label: "Admin Demo",
+    email: "admin@example.com",
+    password: "Password123"
+  },
+  {
+    label: "Member Demo",
+    email: "member@example.com",
+    password: "Password123"
+  }
+];
 
 export default function LoginPage() {
   const location = useLocation();
@@ -19,15 +31,14 @@ export default function LoginPage() {
     return <Navigate to={location.state?.from?.pathname || "/dashboard"} replace />;
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function loginWithCredentials(credentials) {
     setSubmitting(true);
     setError("");
 
     try {
       const response = await apiRequest("/auth/login", {
         method: "POST",
-        body: form
+        body: credentials
       });
 
       saveSession(response.token, response.user);
@@ -45,6 +56,22 @@ export default function LoginPage() {
     } finally {
       setSubmitting(false);
     }
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    await loginWithCredentials(form);
+  }
+
+  async function handleDemoLogin(account) {
+    setForm({
+      email: account.email,
+      password: account.password
+    });
+    await loginWithCredentials({
+      email: account.email,
+      password: account.password
+    });
   }
 
   return (
@@ -107,19 +134,22 @@ export default function LoginPage() {
 
           <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-[#f8f8fb] p-4 text-sm text-slate-600">
             <p className="font-semibold text-slate-800">Demo Accounts</p>
-            <p className="mt-1 text-xs text-slate-500">Use these sample accounts to explore admin and member views.</p>
-            <p className="mt-3">
-              <span className="font-semibold text-slate-800">Admin Email:</span> admin.5c2b5fcf@example.com
-            </p>
-            <p className="mt-1">
-              <span className="font-semibold text-slate-800">Admin Password:</span> Password123
-            </p>
-            <p className="mt-3">
-              <span className="font-semibold text-slate-800">Member Email:</span> member.5c2b5fcf@example.com
-            </p>
-            <p className="mt-1">
-              <span className="font-semibold text-slate-800">Member Password:</span> Password123
-            </p>
+            <p className="mt-1 text-xs text-slate-500">Click any demo account below to log in instantly.</p>
+            <div className="mt-4 grid gap-3 lg:grid-cols-2">
+              {demoAccounts.map((account) => (
+                <button
+                  key={account.label}
+                  type="button"
+                  className="min-w-0 rounded-[1.25rem] border border-slate-200 bg-white px-4 py-3 text-left transition hover:border-slate-300 hover:bg-slate-50"
+                  onClick={() => handleDemoLogin(account)}
+                  disabled={submitting}
+                >
+                  <p className="font-semibold text-slate-800">{account.label}</p>
+                  <p className="mt-1 break-all text-xs text-slate-500">{account.email}</p>
+                  <p className="mt-2 text-xs font-medium text-slate-600">Password: {account.password}</p>
+                </button>
+              ))}
+            </div>
           </div>
 
           <p className="mt-5 text-center text-sm text-slate-600">
