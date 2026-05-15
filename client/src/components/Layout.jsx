@@ -95,8 +95,8 @@ export default function Layout() {
   }
 
   return (
-    <div className="min-h-screen">
-      <div className="relative min-h-screen w-full overflow-hidden bg-white/70 shadow-[0_24px_70px_rgba(99,72,123,0.12)] backdrop-blur lg:grid lg:grid-cols-[230px_minmax(0,1fr)]">
+    <div className="h-screen overflow-hidden">
+      <div className="relative h-screen w-full overflow-hidden bg-white/70 shadow-[0_24px_70px_rgba(99,72,123,0.12)] backdrop-blur lg:grid lg:grid-cols-[230px_minmax(0,1fr)]">
         {menuOpen ? (
           <button
             type="button"
@@ -107,7 +107,7 @@ export default function Layout() {
         ) : null}
 
         <aside
-          className={`fixed inset-y-0 left-0 z-50 w-[85vw] max-w-[290px] border-r border-slate-100 bg-white px-5 py-6 transition-transform duration-200 lg:static lg:z-auto lg:w-auto lg:max-w-none lg:translate-x-0 lg:border-0 lg:border-r lg:border-slate-100 ${
+          className={`fixed inset-y-0 left-0 z-50 w-[85vw] max-w-[290px] overflow-y-auto border-r border-slate-100 bg-white px-5 py-6 transition-transform duration-200 lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:w-auto lg:max-w-none lg:translate-x-0 lg:border-0 lg:border-r lg:border-slate-100 ${
             menuOpen ? "translate-x-0 pointer-events-auto" : "-translate-x-[115%] pointer-events-none lg:pointer-events-auto"
           }`}
         >
@@ -152,11 +152,20 @@ export default function Layout() {
           </button>
         </aside>
 
-        <main className="min-w-0 min-h-screen bg-[#fbfafc] px-4 py-4 sm:px-6 lg:px-8 lg:py-7">
+        <main className="min-w-0 h-screen overflow-y-auto bg-[#fbfafc] px-4 py-4 sm:px-6 lg:px-8 lg:py-7">
           <header className="mb-7 flex flex-wrap items-center gap-3 sm:gap-4">
             <div className="flex min-w-0 items-center gap-3">
-              <button type="button" className="button-secondary lg:hidden" onClick={() => setMenuOpen(true)}>
-                Menu
+              <button
+                type="button"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-amber-100 bg-white/80 text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-white lg:hidden"
+                aria-label="Open navigation menu"
+                onClick={() => setMenuOpen(true)}
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path d="M4 7h16" strokeLinecap="round" />
+                  <path d="M4 12h16" strokeLinecap="round" />
+                  <path d="M4 17h16" strokeLinecap="round" />
+                </svg>
               </button>
               <h2 className="text-[1.65rem] font-semibold tracking-[-0.03em] text-[#232336] sm:text-[1.9rem]">{pageTitle}</h2>
             </div>

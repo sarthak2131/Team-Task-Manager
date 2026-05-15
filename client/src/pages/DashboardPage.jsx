@@ -154,15 +154,21 @@ export default function DashboardPage() {
                   <strong className="text-sm text-[#1f2230]">{member.name}</strong>
                   <p className="mt-1 break-all text-xs text-slate-500">{member.email}</p>
                 </div>
-                <select
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 sm:w-auto"
-                  value={member.role}
-                  onChange={(event) => handleRoleChange(member._id, event.target.value)}
-                  disabled={savingRoleFor === member._id}
-                >
-                  <option value="admin">Admin</option>
-                  <option value="member">Member</option>
-                </select>
+                {user._id === member._id ? (
+                  <div className="w-full rounded-xl border border-slate-200 bg-slate-100 px-3 py-2 text-center text-xs font-semibold text-slate-500 sm:w-auto">
+                    {member.role === "admin" ? "Admin (You)" : "Member (You)"}
+                  </div>
+                ) : (
+                  <select
+                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-600 sm:w-auto"
+                    value={member.role}
+                    onChange={(event) => handleRoleChange(member._id, event.target.value)}
+                    disabled={savingRoleFor === member._id}
+                  >
+                    <option value="admin">Admin</option>
+                    <option value="member">Member</option>
+                  </select>
+                )}
               </div>
             ))}
           </div>
